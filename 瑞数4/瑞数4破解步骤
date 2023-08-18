@@ -1,0 +1,32 @@
+
+RS(瑞数)是基于cookie的反爬虫
+
+瑞数4，以http://www.fangdi.com.cn/new_house/new_house_jjswlpgs.html为例
+1. 首先请求new_house_jjswlpgs.html这个网址，返回状态码为202，同时设置第一个cookie值，其中键为以80S结尾
+2. 请求上面网址后返回JS文件生成第二个cookie值，其中键为以80T结尾
+3. 再次请求new_house_jjswlpgs.html这个网址，返回状态码为200
+
+识别是否为瑞数加密方法：
+1. 看document.cookie进行识别
+2. 看断点 debugger
+
+找到cookie的生成位置，使用hook操作
+
+cookie生成的函数:
+function _$j6() {
+    var _$uS = _$y8(5);
+    if (_$uS) {
+        var _$q0 = _$lz(_$mD);
+        _$QV(_$q0, _$uS);
+    }
+    if (_$_P) {
+        _$_P[_$xO[430]] = _$8K(6);
+    }
+    _$hc(768, 1);
+}
+
+
+调用生成cookie生成函数的函数:
+ret = _$mD.call(_$ed, _$dv);
+
+
